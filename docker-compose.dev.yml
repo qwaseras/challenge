@@ -1,0 +1,38 @@
+version: '3.6'
+services:
+  postgres:
+    image: postgres:12
+    restart: always
+    volumes:
+    - db_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: alksfh#pk!231
+  graphql-engine:
+    image: hasura/graphql-engine:v2.1.1
+    ports:
+    - "8080:8080"
+    depends_on:
+    - "postgres"
+    restart: always
+    environment:
+      HASURA_GRAPHQL_METADATA_DATABASE_URL: postgres://postgres:alksfh#pk!231@postgres:5432/postgres
+      PG_DATABASE_URL: postgres://postgres:alksfh#pk!231@postgres:5432/postgres
+      HASURA_GRAPHQL_ENABLE_CONSOLE: "true"
+      HASURA_GRAPHQL_DEV_MODE: "true"
+      HASURA_GRAPHQL_ENABLED_LOG_TYPES: startup, http-log, webhook-log, websocket-log, query-log
+  next: 
+    build: 
+      context: ./
+      dockerfile: Dockerfile.frontend-dev
+    restart: always
+    volumes:
+      - ./:/app
+      - /app/node_modules
+      - /app/.next
+    environment:
+      CHOKIDAR_USEPOLLING: "true"
+    ports:
+      - 3000:3000
+volumes:
+  db_data:
+
