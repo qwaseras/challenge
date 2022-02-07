@@ -13,9 +13,10 @@ const GET_TAILS = gql`
 
 const Home: NextPage = () => {
   const { loading, error, data } = useQuery(GET_TAILS);
+
   return (
     <div className={styles.container}>{JSON.stringify(data?.long_tails)}</div>
   );
-};
+};;
 
 export default Home;
