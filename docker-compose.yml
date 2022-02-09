@@ -20,17 +20,25 @@ services:
     
   next: 
     build: 
-      context: ./
-      dockerfile: Dockerfile.frontend-dev
+      context: ./frontend
     restart: always
     volumes:
-      - ./:/app
+      - ./frontend/:/app
       - /app/node_modules
       - /app/.next
     environment:
       CHOKIDAR_USEPOLLING: "true"
     ports:
       - 3000:3000
+  custom_graphql: 
+    build: 
+      context: ./custom_graphql_server
+    restart: always
+    volumes:
+      - /app/node_modules
+      - ./custom_graphql_server:/app
+    ports:
+      - 4000:4000
 volumes:
   db_data:
 

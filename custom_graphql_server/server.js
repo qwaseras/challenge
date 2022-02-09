@@ -23,7 +23,14 @@ var root = {
   full_tail: ({ id }) => {
     const file = fs.readFileSync("./data.json", "utf8");
     const parsedTails = JSON.parse(file);
+    console.log(file);
     return parsedTails.find((tail) => tail.id === id);
+  },
+  full_tails: () => {
+    const file = fs.readFileSync("./data.json", "utf8");
+    const parsedTails = JSON.parse(file);
+    console.log(file);
+    return parsedTails;
   },
 };
 
